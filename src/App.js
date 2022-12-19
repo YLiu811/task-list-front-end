@@ -1,6 +1,6 @@
 import React from 'react';
 import TaskList from './components/TaskList.js';
-import { useState } from "react";
+import { useState } from 'react';
 import './App.css';
 
 const INITIAL_TASKS = [
@@ -20,11 +20,9 @@ const App = () => {
   const initialCopy = INITIAL_TASKS.map((task) => {
     return { ...task };
   });
-
   const [taskList, setTasksList] = useState(initialCopy);
-  
   const updateComplete = (taskId, updatedComplete) => {
-    console.log("updatedComplete called");
+    // console.log("updatedComplete called");
     const newTasksList = [];
     for (const task of taskList) {
       if (task.id !== taskId) {
@@ -46,7 +44,9 @@ const App = () => {
         <h1>Ada&apos;s Task List</h1>
       </header>
       <main>
-        <div>{<TaskList tasks={taskList} updateComplete={updateComplete} />}</div>
+        <div>
+          {<TaskList tasks={taskList} updateComplete={updateComplete} />}
+        </div>
       </main>
     </div>
   );
