@@ -21,8 +21,9 @@ const App = () => {
     return { ...task };
   });
   const [taskList, setTasksList] = useState(initialCopy);
+
   const updateComplete = (taskId, updatedComplete) => {
-    // console.log("updatedComplete called");
+    console.log('updatedComplete called');
     const newTasksList = [];
     for (const task of taskList) {
       if (task.id !== taskId) {
@@ -38,6 +39,16 @@ const App = () => {
     setTasksList(newTasksList);
   };
 
+  const deleteTask = (taskId) => {
+    const newTasksList = [];
+    for (const task of taskList) {
+      if (task.id !== taskId) {
+        newTasksList.push(task);
+      }
+    }
+    setTasksList(newTasksList);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -45,7 +56,7 @@ const App = () => {
       </header>
       <main>
         <div>
-          <TaskList tasks={taskList} updateComplete={updateComplete} />
+          <TaskList tasks={taskList} updateComplete={updateComplete} deleteTask={deleteTask}/>
         </div>
       </main>
     </div>
