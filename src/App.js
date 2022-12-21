@@ -45,7 +45,7 @@ const App = () => {
       </header>
       <main>
         <div>
-          {<TaskList tasks={taskList} updateComplete={updateComplete} />}
+          <TaskList tasks={taskList} updateComplete={updateComplete} />
         </div>
       </main>
     </div>
