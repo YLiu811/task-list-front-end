@@ -1,26 +1,47 @@
-import React from 'react';
+import { useEffect } from 'react';
 import TaskList from './components/TaskList.js';
 import { useState } from 'react';
 import './App.css';
+import axios from 'axios';
 
-const INITIAL_TASKS = [
-  {
-    id: 1,
-    title: 'Mow the lawn',
-    isComplete: false,
-  },
-  {
-    id: 2,
-    title: 'Cook Pasta',
-    isComplete: true,
-  },
-];
+// const INITIAL_TASKS = [
+//   {
+//     id: 1,
+//     title: 'Mow the lawn',
+//     isComplete: false,
+//   },
+//   {
+//     id: 2,
+//     title: 'Cook Pasta',
+//     isComplete: true,
+//   },
+// ];
 
 const App = () => {
-  const initialCopy = INITIAL_TASKS.map((task) => {
-    return { ...task };
-  });
-  const [taskList, setTasksList] = useState(initialCopy);
+  const [taskList, setTasksList] = useState([]);
+  const URL = 'http://127.0.0.1:5000/tasks';
+  useEffect (()=>{
+    axios.get(URL)
+    .then((res)=>{
+      console.log(res);
+      const taskAPiResCopy = res.data.map((task)=>{
+        return {
+          ...task};
+
+      });
+      setTasksList(taskAPiResCopy);
+    })
+    .catch((err)=>{
+      console.log(err);
+    });
+  },[]);
+
+
+
+  // const initialCopy = INITIAL_TASKS.map((task) => {
+  //   return { ...task };
+  // });
+  
 
   const updateComplete = (taskId, updatedComplete) => {
     console.log('updatedComplete called');
