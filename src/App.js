@@ -3,6 +3,8 @@ import TaskList from './components/TaskList.js';
 import { useState } from 'react';
 import './App.css';
 import axios from 'axios';
+import NewTaskFrom from './components/NewTaskForm.js';
+import React from 'react';
 
 // const INITIAL_TASKS = [
 //   {
@@ -16,6 +18,7 @@ import axios from 'axios';
 //     isComplete: true,
 //   },
 // ];
+
 
 const App = () => {
   const [taskList, setTasksList] = useState([]);
@@ -69,15 +72,34 @@ const App = () => {
     }
     setTasksList(newTasksList);
   };
+  const addTask = (newTaskInfo) => {
+    axios.post(URL, newTaskInfo)
+    .then((response)=>{
+      //fetchAllBikes();  //<- This helper function will make a .get() call to fetch all bikes and update the state variable to display them
+      const newTasks = [...taskList];
+      const newTaskJSON = {
+        ...newTaskInfo,
+        'id': response.data.id
+      };
+      newTasks.push(newTaskJSON);
+      setTasksList(newTasks); //this method does not require a .get request; we are pushing the bike data to the bikes list and using the setter to trigger a rerender.
+    })
+    .catch((error)=>{
+      console.log(error);
+    });
+  };
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className='App'>
+      <header className='App-header'>
         <h1>Ada&apos;s Task List</h1>
       </header>
       <main>
         <div>
           <TaskList tasks={taskList} updateComplete={updateComplete} deleteTask={deleteTask}/>
+        </div>
+        <div>
+        <NewTaskFrom addTaskCallbackFunc={addTask}/>
         </div>
       </main>
     </div>
